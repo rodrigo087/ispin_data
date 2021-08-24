@@ -3,7 +3,7 @@ iSpin Data
 ==============
 
 .. image:: https://travis-ci.org/lead-ratings/gender-guesser.svg?branch=master
-    :target: https://travis-ci.org/lead-ratings/gender-guesser_XXX
+    :target: https://github.com/rodrigo087/ispin_data
 
 
 This package provides access to iSpin data for a specified turbine ID.  Its use is pretty straightforward::
