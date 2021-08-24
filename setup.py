@@ -36,7 +36,7 @@ setup(
     author_email='rel@romowind.com',
     packages=['ispin_data'],
     package_dir={'ispin_data': 'ispin_data'},
-    url='https://github.com/lead-ratings/gender-guesser',
+    url='https://github.com/rodrigo087/ispin_data',
     description='Gets iSpin data for a turbine ID.',
     long_description=open('README.rst', encoding='utf-8').read(),
 )
