@@ -49,7 +49,7 @@ def __authorize():
 
 
 
-def request_data():
+def request_overview():
     """
     Loads an overview of the iSpin installations
     """  
