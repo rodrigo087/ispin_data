@@ -3,7 +3,8 @@
 #
 #    """Creates a detector parsing given data file"""
 #    self.case_sensitive = case_sensitive
-
+#username=None
+#password=None
 
 
 def __authorize(username, password):
@@ -12,12 +13,10 @@ def __authorize(username, password):
     """
     # Module import
     import requests
-    import base64
     from retry import retry
+    global username
+    global password
     requests.packages.urllib3.disable_warnings()
-  
-    # Login credentials (replace them with their user name and password)
-    password = base64.b64decode(password).decode("utf-8")
   
     # Get access token...
     parameters = {'grant_type': 'password', 'username': username, 'password':password}
