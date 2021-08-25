@@ -7,7 +7,7 @@
 #password=None
 
 
-def __authorize(username, password):
+def __authorize():
     """
     User authentication
     """
