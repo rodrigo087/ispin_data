@@ -9,11 +9,10 @@ iSpin Data
 This package provides access to iSpin data for a specified turbine ID.  Its use is pretty straightforward::
 
     >>> import ispin_data.api as ispin
-    >>> iSpin = ispin.Data()
-    >>> df = iSpin.request_data(34)
-    3634
+    >>> df = ispin.request_overview()
+    # Returns iSpin installations
     >>> df = iSpin.request_data(6)
-    113
+    # Returns data for installation number 6
 
 The explanation each columns of the returned DataFrame can be consulted in the XXXXXXXX.txt file
 
