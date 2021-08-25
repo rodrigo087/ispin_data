@@ -66,7 +66,7 @@ def request_overview():
 
 
 
-def request_iSpin_data(turb, start_date=None, end_date=None):
+def request_data(turb, start_date=None, end_date=None):
     """
     Loads iSpin data for a turbine ID through the API
     
