@@ -9,14 +9,17 @@ iSpin Data
 This package provides access to iSpin data for a specified turbine ID.  Its use is pretty straightforward::
 
     >>> import ispin_data.api as ispin
+    
+    >>> ispin.username = 'your_username'
+    >>> ispin.password = 'your_password'
+    
     >>> df = ispin.request_overview()
     # Returns iSpin installations
+    
     >>> df = iSpin.request_data(6)
-    # Returns data for installation number 6
+    # Returns data for installation number 6. The start and end date can also be specified
 
 The explanation each columns of the returned DataFrame can be consulted in the XXXXXXXX.txt file
-
-For now, the function will only provide the area of a circle given by the specified turbine ID
 
 
 Licenses
@@ -31,5 +34,9 @@ Changelog
 0.1.0 (2021-08-24)
 ******************
 
-* First release of the package
+* First release
 
+0.1.8 (2021-08-25)
+******************
+
+* Current release
