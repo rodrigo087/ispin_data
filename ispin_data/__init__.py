@@ -1,3 +1,3 @@
 # Variables for the authentication
-username=None
-password=None
+username_X=None
+password_X=None

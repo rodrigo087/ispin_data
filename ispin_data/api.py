@@ -1,17 +1,21 @@
+# Global variables
+username = None
+password = None
+
+
 # Functions
 #def __init__(self, case_sensitive=False):
 #
 #    """Creates a detector parsing given data file"""
 #    self.case_sensitive = case_sensitive
-#username=None
-#password=None
+
 
 
 def __authorize():
     """
     User authentication
     """
-    # Module import
+
     import requests
     from retry import retry
     global username
@@ -28,7 +32,10 @@ def __authorize():
         if (response.status_code == 200):
             print("*** Authenticated ***")
         return response
-    
+
+    if (username==None) & (password==None):
+        raise Exception("Please provide your username and password as follows:\n import ispin_data.api as ispin\n ispin.username = 'your_username'\n ispin.password = 'your_password'")
+        
     response = post_token()
     
     try:
@@ -42,7 +49,51 @@ def __authorize():
 
 
 
-def __circle_area(ID):
+def request_data():
+    """
+    Loads an overview of the iSpin installations
+    """  
+    
+    import requests
+    import pandas as pd
+
+    # Obtaining authentication token
+    authHeader = __authorize()
+    
+    # Requesting the turbines data
+    __baseUrl = "https://dc.romowind.net/api"
+    URL = __baseUrl + '/turbines'
+    response = requests.get(URL, headers=authHeader, verify=False)
+    Dataresponse = response.json()
+    
+    # Formatting the output data frame
+    df = pd.DataFrame(Dataresponse)
+    df = df.set_index('id')
+    
+    return df
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def __circle_area_calc(ID):
     """ 
     Finds the area of a circle fiven by the specified turbine ID
     """
@@ -50,13 +101,13 @@ def __circle_area(ID):
     a = round(np.pi * ID**2)
     return a
 
-def request_data(ID):
+def circle_area(ID):
     """
     Returns iSpin data for a specified turbine ID
     """
 
     if type(ID) == int:
-        return __circle_area(ID)
+        return __circle_area_calc(ID)
     else:
         raise Exception("The provided turbine ID does not exists")
 
