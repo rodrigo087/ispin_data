@@ -29,15 +29,19 @@ def __authorize():
         raise Exception("Please provide your username and password as follows:\n import ispin_data.api as ispin\n ispin.username = 'your_username'\n ispin.password = 'your_password'")
         
     response = post_token()
+    authResponse = response.json()
     
-    try:
-        authResponse = response.json()
+    # Check if the authentication was successful
+    if 'error' in authResponse.keys():
+        if authResponse['error'] == 'invalid_grant':
+            raise Exception('Invalid username and password')
+        if authResponse['error'] == 'unauthorized_client':
+            raise Exception('If you are using this service for the first time, you need to log in to "https://api.romowind.net/" with your username, password and the code that was sent to your email.\nThen you can come back and run this function again')
+    else:
         accessToken = authResponse['access_token']
         authHeader_base = {'Authorization': 'Bearer '+accessToken}
-    except:
-        raise Exception('Invalid username and password')
     
-    return authHeader_base
+        return authHeader_base
 
 
 
@@ -98,7 +102,7 @@ def request_data(turb, start_date=None, end_date=None):
         end_date = str(datetime.datetime.now())[0:10]
     
     # Obtaining authentication token
-    authHeader = __authorize()
+    authHeader = __authorize() 
     
     # Requesting the data
     __baseUrl = "https://api.romowind.net/api"
@@ -116,12 +120,8 @@ def request_data(turb, start_date=None, end_date=None):
         if 'No data service' in Dataresponse['message']:
             raise Exception('No data service for this turbine is enabled. Please contact Nabla Wind Hub if you would like to get data access for this turbine')
         if 'request is invalid' in Dataresponse['message']:
-            raise Exception('Please doublecheck the date format of the data to be requested')
-        if 'security code' in Dataresponse['message']:
-            print('If you are using this service for the first time, you need to log in to "https://api.romowind.net/" with your username, password and the code that was sent to your email')
-            return print('Then you can come back and run this function again')
+            raise Exception('Please doublecheck the date format that was given to request the data')
 
-        
     # Formatting the output DataFrame
     df = pd.DataFrame(Dataresponse)
     df.sampleTime = pd.to_datetime(df.sampleTime)
