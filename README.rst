@@ -19,7 +19,7 @@ This package provides access to iSpin data for a specified turbine ID.  Its use 
     >>> df = iSpin.request_data(6)
     # Returns data for installation number 6. The start and end date can also be specified
 
-The explanation each columns of the returned DataFrame can be consulted in the XXXXXXXX.txt file
+
 
 
 Licenses
@@ -36,7 +36,7 @@ Changelog
 
 * First release
 
-0.2.1 (2021-08-26)
+0.2.2 (2021-08-26)
 ******************
 
 * Current release
