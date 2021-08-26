@@ -21,7 +21,7 @@ def __authorize():
     
     @retry(tries=2, delay=30) # Retry twice.
     def post_token():      
-        __baseUrl = "https://dc.romowind.net/api"
+        __baseUrl = "https://api.romowind.net/api"
         response = requests.post(__baseUrl + "/token", data=parameters, verify=False)
         return response
 
@@ -53,7 +53,7 @@ def request_overview():
     authHeader = __authorize()
     
     # Requesting the turbines data
-    __baseUrl = "https://dc.romowind.net/api"
+    __baseUrl = "https://api.romowind.net/api"
     URL = __baseUrl + '/turbines'
     response = requests.get(URL, headers=authHeader, verify=False)
     Dataresponse = response.json()
@@ -101,11 +101,27 @@ def request_data(turb, start_date=None, end_date=None):
     authHeader = __authorize()
     
     # Requesting the data
-    __baseUrl = "https://dc.romowind.net/api"
+    __baseUrl = "https://api.romowind.net/api"
     URL = __baseUrl + '/turbines/%d/data?fromTime=%s&toTime=%s' % (turb, start_date, end_date)
     response = requests.get(URL, headers=authHeader, verify=False)
     Dataresponse = response.json()
     
+    # Error messages if the request fails
+    if type(Dataresponse) == list:
+        if Dataresponse == []:
+            raise Exception('No data in the selected period')
+    else:
+        if 'not found' in Dataresponse['message']:
+            raise Exception('The requested turbine was not found. Check that you have the right permissions to load data for this turbine')
+        if 'No data service' in Dataresponse['message']:
+            raise Exception('No data service for this turbine is enabled. Please contact Nabla Wind Hub if you would like to get data access for this turbine')
+        if 'request is invalid' in Dataresponse['message']:
+            raise Exception('Please doublecheck the date format of the data to be requested')
+        if 'security code' in Dataresponse['message']:
+            print('If you are using this service for the first time, you need to log in to "https://api.romowind.net/" with your username, password and the code that was sent to your email')
+            return print('Then you can come back and run this function again')
+
+        
     # Formatting the output DataFrame
     df = pd.DataFrame(Dataresponse)
     df.sampleTime = pd.to_datetime(df.sampleTime)
@@ -113,7 +129,10 @@ def request_data(turb, start_date=None, end_date=None):
     df.index = df.index.tz_localize(None)
        
     # Sorting the columns
-    df = df.drop(['metDataValid', 'windVaneAdjustmentIndex'], axis=1)
+    if 'metDataValid' in df.columns:
+        df = df.drop(['metDataValid'], axis=1)      
+    if 'windVaneAdjustmentIndex' in df.columns:
+        df = df.drop(['windVaneAdjustmentIndex'], axis=1)
     df = df.reindex(sorted(df.columns), axis=1)
     
     return df

@@ -31,7 +31,7 @@ class Tox(TestCommand):
 
 setup(
     name='iSpin-data',
-    version='0.1.8',
+    version='0.1.9',
     author='Rodrigo Hurtado',
     author_email='rel@romowind.com',
     packages=['ispin_data'],
