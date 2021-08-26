@@ -48,6 +48,11 @@ def __authorize():
 def request_overview():
     """
     Loads an overview of the iSpin installations
+    
+    Returns
+    ------------
+    df : DataFrame
+        DataFrame with information of the iSpin installation, where the index corresponds to the turbine ID
     """  
     
     import requests
@@ -64,6 +69,7 @@ def request_overview():
     
     # Formatting the output data frame
     df = pd.DataFrame(Dataresponse)
+    df.insert(0, 'turbineID', df.id)
     df = df.set_index('id')
     
     return df
@@ -72,7 +78,7 @@ def request_overview():
 
 def request_data(turb, start_date=None, end_date=None):
     """
-    Loads iSpin data for a turbine ID through the API
+    Loads iSpin data for a turbine ID
     
     Parameters
     --------------
@@ -82,6 +88,11 @@ def request_data(turb, start_date=None, end_date=None):
         staring date of the data to be loaded in the format: 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'
     end_date : str
         ending date of the data te be loaded in the format: 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'
+
+    Returns
+    ------------
+    df : DataFrame
+        DataFrame with the iSpin measurements of the requested wind turbine for the selected period of time 
     """  
     
     import pandas as pd
