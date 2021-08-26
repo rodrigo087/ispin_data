@@ -142,8 +142,6 @@ def request_data(turb, start_date=None, end_date=None):
     # Sorting the columns
     if 'metDataValid' in df.columns:
         df = df.drop(['metDataValid'], axis=1)      
-    if 'windVaneAdjustmentIndex' in df.columns:
-        df = df.drop(['windVaneAdjustmentIndex'], axis=1)
     df = df.reindex(sorted(df.columns), axis=1)
     
     return df
