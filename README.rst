@@ -36,7 +36,7 @@ Changelog
 
 * First release
 
-0.2.0 (2021-08-26)
+0.2.1 (2021-08-26)
 ******************
 
 * Current release
