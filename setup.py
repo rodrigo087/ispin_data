@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 from io import open
 import sys
@@ -31,10 +31,10 @@ class Tox(TestCommand):
 
 setup(
     name='iSpin-data',
-    version='0.2.4',
+    version='0.2.5',
     author='Rodrigo Hurtado',
     author_email='rel@romowind.com',
-    packages=['ispin_data'],
+    packages=find_packages(),
     package_dir={'ispin_data': 'ispin_data'},
     url='https://github.com/rodrigo087/ispin_data',
     description='Gets iSpin data for a turbine ID.',
