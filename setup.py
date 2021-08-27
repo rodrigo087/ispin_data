@@ -31,7 +31,7 @@ class Tox(TestCommand):
 
 setup(
     name='iSpin-data',
-    version='0.2.6',
+    version='0.2.7',
     author='Rodrigo Hurtado',
     author_email='rel@romowind.com',
     packages=find_packages(),
@@ -39,4 +39,9 @@ setup(
     url='https://github.com/rodrigo087/ispin_data',
     description='Gets iSpin data for a turbine ID.',
     long_description=open('README.rst', encoding='utf-8').read(),
+    install_requires=[
+        'requests',
+        'retry',
+        'pandas',
+    ]
 )
